@@ -1,6 +1,7 @@
 package com.example.employeepayrollapp.controller;
 
 import com.example.employeepayrollapp.dto.PayrollDTO;
+import com.example.employeepayrollapp.dto.ResponseDTO;
 import com.example.employeepayrollapp.model.PayrollModel;
 import com.example.employeepayrollapp.repository.PayrollRepo;
 import com.example.employeepayrollapp.service.PayrollService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PayrollController {
@@ -24,10 +26,15 @@ public class PayrollController {
         String result=service.greetEmp(name);
         return result;
     }
+    @GetMapping("/findEmp/{id}")
+    public Optional<PayrollModel> findId(@PathVariable int id){
+        return service.findById(id);
+    }
     @PostMapping("/upload")
-    public PayrollModel upload(@RequestBody PayrollDTO model){
+    public ResponseDTO upload(@RequestBody PayrollDTO model){
         PayrollModel payrollModel=service.upload(model);
-        return payrollModel;
+        ResponseDTO responseDTO=new ResponseDTO("Employee details uploaded successfully!",payrollModel);
+        return responseDTO;
     }
     @GetMapping("/allDetails")
     public List<PayrollModel> getAll(){

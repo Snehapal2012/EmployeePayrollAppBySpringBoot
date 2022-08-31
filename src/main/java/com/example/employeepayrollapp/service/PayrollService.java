@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PayrollService {
@@ -37,5 +38,9 @@ public class PayrollService {
         model.setNotes(entity.getNotes());
         model.setStartDate(entity.getStartDate());
         return repo.save(model);
+    }
+
+    public Optional<PayrollModel> findById(int id) {
+        return repo.findById(id);
     }
 }

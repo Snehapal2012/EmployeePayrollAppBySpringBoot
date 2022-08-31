@@ -4,7 +4,8 @@ package com.example.employeepayrollapp.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 public class PayrollDTO {
@@ -14,6 +15,5 @@ public class PayrollDTO {
     private String department;
     private long salary;
     private String notes;
-    private Date startDate;
-
+    private LocalDate startDate;
 }

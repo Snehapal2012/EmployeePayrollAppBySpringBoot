@@ -8,7 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
+
 
 @Entity
 @Data
@@ -24,7 +26,7 @@ public class PayrollModel {
     private String department;
     private long salary;
     private String notes;
-    private Date startDate;
+    private LocalDate startDate;
     public PayrollModel(PayrollDTO model) {
         this.name=model.getName();
         this.profilePic=model.getProfilePic();
