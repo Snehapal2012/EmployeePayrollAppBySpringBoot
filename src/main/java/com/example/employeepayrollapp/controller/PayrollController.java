@@ -1,12 +1,12 @@
 package com.example.employeepayrollapp.controller;
 
+import com.example.employeepayrollapp.dto.PayrollDTO;
 import com.example.employeepayrollapp.model.PayrollModel;
 import com.example.employeepayrollapp.repository.PayrollRepo;
 import com.example.employeepayrollapp.service.PayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,8 +25,9 @@ public class PayrollController {
         return result;
     }
     @PostMapping("/upload")
-    public String upload(@RequestBody PayrollModel model){
-        return service.upload(model);
+    public PayrollModel upload(@RequestBody PayrollDTO model){
+        PayrollModel payrollModel=service.upload(model);
+        return payrollModel;
     }
     @GetMapping("/allDetails")
     public List<PayrollModel> getAll(){
@@ -39,9 +40,9 @@ public class PayrollController {
         return "<h1><font color=brown style=bold>Details:-- " +"Name: "+name +" Profile Pic: " + profilePic + "  Gender: "+gender+"  Department: "+department+"  Notes: </font></h1>"+notes;
     }
     @PutMapping("/editEmp/{id}")
-    public String edit(@RequestBody PayrollModel entity,@PathVariable int id) {
-        service.edit(entity,id);
-        return "Updated!";
+    public PayrollModel edit(@RequestBody PayrollDTO entity,@PathVariable int id) {
+        PayrollModel payrollModel= service.edit(entity,id);
+        return payrollModel;
     }
 
     @DeleteMapping("/deleteEmp/{id}")

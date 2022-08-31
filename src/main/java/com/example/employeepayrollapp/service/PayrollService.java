@@ -1,5 +1,6 @@
 package com.example.employeepayrollapp.service;
 
+import com.example.employeepayrollapp.dto.PayrollDTO;
 import com.example.employeepayrollapp.model.PayrollModel;
 import com.example.employeepayrollapp.repository.PayrollRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ public class PayrollService {
         return "<h1><font color=orange style=bold>Hello "+name+" ! Welcome to Employee Payroll App! </font></h1>";
     }
 
-    public String upload(PayrollModel model) {
-        repo.save(model);
-        String list="id: "+model.getId()+" Name: "+model.getName()+"  Profile pic: "+model.getProfilePic()+"  Gender: "+model.getGender()+"  Department: "+model.getDepartment()+"  Salary: "+model.getSalary()+"  Notes: "+model.getNotes()+"  Start date: "+model.getStartDate();
-        return list;
+    public PayrollModel upload(PayrollDTO model) {
+        PayrollModel payrollModel=new PayrollModel(model);
+        repo.save(payrollModel);
+        return payrollModel;
     }
 
     public List<PayrollModel> getAll() {
@@ -26,9 +27,8 @@ public class PayrollService {
         return list;
     }
 
-    public PayrollModel edit(PayrollModel entity, int id) {
+    public PayrollModel edit(PayrollDTO entity, int id) {
         PayrollModel model=repo.findById(id).get();
-        model.setId(entity.getId());
         model.setName(entity.getName());
         model.setProfilePic(entity.getProfilePic());
         model.setGender(entity.getGender());
