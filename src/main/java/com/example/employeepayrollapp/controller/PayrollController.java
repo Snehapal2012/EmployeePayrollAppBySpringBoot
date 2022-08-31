@@ -6,6 +6,8 @@ import com.example.employeepayrollapp.model.PayrollModel;
 import com.example.employeepayrollapp.repository.PayrollRepo;
 import com.example.employeepayrollapp.service.PayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,45 +19,57 @@ public class PayrollController {
     PayrollService service;
     @Autowired
     PayrollRepo repo;
+    //to display welcome message
     @GetMapping(value = {"","/","/home"})
     public String home(){
         return "<h1><font color=blue style=bold>Welcome to Employee Payroll App !!</font></h1>";
     }
+    //to greet any particular employee by their name
     @GetMapping("/greetEmp/{name}")
     public String greetEmp(@PathVariable String name){
         String result=service.greetEmp(name);
         return result;
     }
+    //to find any particular employee details using id
     @GetMapping("/findEmp/{id}")
-    public Optional<PayrollModel> findId(@PathVariable int id){
-        return service.findById(id);
+    public ResponseEntity<ResponseDTO> findId(@PathVariable int id){
+        Optional<PayrollModel> response=service.findById(id);
+        ResponseDTO responseDTO=new ResponseDTO("Employee details is found!",response);
+        return new ResponseEntity(responseDTO,HttpStatus.FOUND);
     }
+    //to upload or add any new employee details
     @PostMapping("/upload")
-    public ResponseDTO upload(@RequestBody PayrollDTO model){
+    public ResponseEntity<ResponseDTO> upload(@RequestBody PayrollDTO model){
         PayrollModel payrollModel=service.upload(model);
         ResponseDTO responseDTO=new ResponseDTO("Employee details uploaded successfully!",payrollModel);
-        return responseDTO;
+        return new ResponseEntity(responseDTO, HttpStatus.CREATED);
     }
+    //to get all employee details
     @GetMapping("/allDetails")
-    public List<PayrollModel> getAll(){
+    public ResponseEntity<ResponseDTO> getAll(){
         List<PayrollModel> modelList=service.getAll();
-        return modelList;
+        ResponseDTO responseDTO=new ResponseDTO("All Employee details!",modelList);
+        return new ResponseEntity(responseDTO,HttpStatus.OK);
     }
+    //to get any employee details using put method
     @PutMapping("/put/{id}")
     public String put(@PathVariable int id,@RequestParam(value = "name") String name,
                       @RequestParam(value = "profilePic") String profilePic, @RequestParam(value = "gender") String gender, @RequestParam(value = "department") String department,  @RequestParam(value = "notes") String notes) {
         return "<h1><font color=brown style=bold>Details:-- " +"Name: "+name +" Profile Pic: " + profilePic + "  Gender: "+gender+"  Department: "+department+"  Notes: </font></h1>"+notes;
     }
+    //edit any employee details by id
     @PutMapping("/editEmp/{id}")
-    public PayrollModel edit(@RequestBody PayrollDTO entity,@PathVariable int id) {
+    public ResponseEntity<ResponseDTO> edit(@RequestBody PayrollDTO entity,@PathVariable int id) {
         PayrollModel payrollModel= service.edit(entity,id);
-        return payrollModel;
+        ResponseDTO responseDTO=new ResponseDTO("Employee details is edited!",payrollModel);
+        return new ResponseEntity(responseDTO,HttpStatus.ACCEPTED);
     }
-
+    //delete any employee details by id
     @DeleteMapping("/deleteEmp/{id}")
-    public String delete(@PathVariable int id) {
-        repo.deleteById(id);
-        return "Deleted!";
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id) {
+        service.delete(id);
+        ResponseDTO responseDTO=new ResponseDTO("Employee details is deleted!","Deleted employee id: "+id);
+        return new ResponseEntity(responseDTO,HttpStatus.GONE);
     }
 
 }

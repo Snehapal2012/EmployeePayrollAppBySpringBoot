@@ -43,4 +43,8 @@ public class PayrollService {
     public Optional<PayrollModel> findById(int id) {
         return repo.findById(id);
     }
+
+    public void delete(int id) {
+        repo.deleteById(id);
+    }
 }
