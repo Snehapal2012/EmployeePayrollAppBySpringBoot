@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class PayrollController {
     }
     //to upload or add any new employee details
     @PostMapping("/upload")
-    public ResponseEntity<ResponseDTO> upload(@RequestBody PayrollDTO model){
+    public ResponseEntity<ResponseDTO> upload(@Valid @RequestBody PayrollDTO model){
         PayrollModel payrollModel=service.upload(model);
         ResponseDTO responseDTO=new ResponseDTO("Employee details uploaded successfully!",payrollModel);
         return new ResponseEntity(responseDTO, HttpStatus.CREATED);
@@ -53,13 +54,13 @@ public class PayrollController {
     }
     //to get any employee details using put method
     @PutMapping("/put/{id}")
-    public String put(@PathVariable int id,@RequestParam(value = "name") String name,
+    public String put(@Valid @PathVariable int id,@RequestParam(value = "name") String name,
                       @RequestParam(value = "profilePic") String profilePic, @RequestParam(value = "gender") String gender, @RequestParam(value = "department") String department,  @RequestParam(value = "notes") String notes) {
         return "<h1><font color=brown style=bold>Details:-- " +"Name: "+name +" Profile Pic: " + profilePic + "  Gender: "+gender+"  Department: "+department+"  Notes: </font></h1>"+notes;
     }
     //edit any employee details by id
     @PutMapping("/editEmployee/{id}")
-    public ResponseEntity<ResponseDTO> edit(@RequestBody PayrollDTO entity,@PathVariable int id) {
+    public ResponseEntity<ResponseDTO> edit(@Valid @RequestBody PayrollDTO entity,@PathVariable int id) {
         PayrollModel payrollModel= service.edit(entity,id);
         ResponseDTO responseDTO=new ResponseDTO("Employee details is edited!",payrollModel);
         return new ResponseEntity(responseDTO,HttpStatus.ACCEPTED);
