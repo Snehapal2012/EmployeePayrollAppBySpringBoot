@@ -25,13 +25,13 @@ public class PayrollController {
         return "<h1><font color=blue style=bold>Welcome to Employee Payroll App !!</font></h1>";
     }
     //to greet any particular employee by their name
-    @GetMapping("/greetEmp/{name}")
+    @GetMapping("/greetEmployee/{name}")
     public String greetEmp(@PathVariable String name){
         String result=service.greetEmp(name);
         return result;
     }
     //to find any particular employee details using id
-    @GetMapping("/findEmp/{id}")
+    @GetMapping("/findEmployee/{id}")
     public ResponseEntity<ResponseDTO> findId(@PathVariable int id){
         Optional<PayrollModel> response=service.findById(id);
         ResponseDTO responseDTO=new ResponseDTO("Employee details is found!",response);
@@ -58,14 +58,14 @@ public class PayrollController {
         return "<h1><font color=brown style=bold>Details:-- " +"Name: "+name +" Profile Pic: " + profilePic + "  Gender: "+gender+"  Department: "+department+"  Notes: </font></h1>"+notes;
     }
     //edit any employee details by id
-    @PutMapping("/editEmp/{id}")
+    @PutMapping("/editEmployee/{id}")
     public ResponseEntity<ResponseDTO> edit(@RequestBody PayrollDTO entity,@PathVariable int id) {
         PayrollModel payrollModel= service.edit(entity,id);
         ResponseDTO responseDTO=new ResponseDTO("Employee details is edited!",payrollModel);
         return new ResponseEntity(responseDTO,HttpStatus.ACCEPTED);
     }
     //delete any employee details by id
-    @DeleteMapping("/deleteEmp/{id}")
+    @DeleteMapping("/deleteEmployee/{id}")
     public ResponseEntity<ResponseDTO> delete(@PathVariable int id) {
         service.delete(id);
         ResponseDTO responseDTO=new ResponseDTO("Employee details is deleted!","Deleted employee id: "+id);
