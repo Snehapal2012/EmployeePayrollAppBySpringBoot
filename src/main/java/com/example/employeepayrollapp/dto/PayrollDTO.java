@@ -12,16 +12,16 @@ import java.time.LocalDate;
 public class PayrollDTO {
     @Pattern(regexp = "^[A-Z]{1}[a-z]{3,}\\s{0,}[A-z]{1}[a-z]{2,}",message = "Invalid Employee name!")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "Profile pic is empty!")
     private String profilePic;
-    @NotNull
+    @NotNull(message = "Gender should not be null!")
     private String gender;
     @Pattern(regexp = "^[A-Z]{1}[a-z]{3,}",message = "Invalid Department")
     private String department;
-    @Min(value = 10000)
+    @Min(value = 10000,message = "Salary should be more than 10,000!")
     private long salary;
-    @Size(min=2)
+    @Size(min=2,message = "Notes length should be more than 2!")
     private String notes;
-    @Past
+    @Past(message = "Start date should be in past!")
     private LocalDate startDate;
 }
