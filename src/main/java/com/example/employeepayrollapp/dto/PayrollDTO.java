@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +17,7 @@ public class PayrollDTO {
     private String profilePic;
     @NotNull(message = "Gender should not be null!")
     private String gender;
-    @Pattern(regexp = "^[A-Z]{1}[a-z]{3,}",message = "Invalid Department")
-    private String department;
+    private List<String> departments;
     @Min(value = 10000,message = "Salary should be more than 10,000!")
     private long salary;
     @Size(min=2,message = "Notes length should be more than 2!")

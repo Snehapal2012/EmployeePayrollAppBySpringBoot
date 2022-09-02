@@ -33,7 +33,7 @@ public class PayrollService {
         model.setName(entity.getName());
         model.setProfilePic(entity.getProfilePic());
         model.setGender(entity.getGender());
-        model.setDepartment(entity.getDepartment());
+        model.setDepartments(entity.getDepartments());
         model.setSalary(entity.getSalary());
         model.setNotes(entity.getNotes());
         model.setStartDate(entity.getStartDate());
