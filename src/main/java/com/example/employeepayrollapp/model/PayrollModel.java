@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PayrollModel {
 @Id
-@Column(name = "id")
-@GeneratedValue
-    private int id;
+@Column(name = "employee_id")
+@GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 @Column(name = "name")
     private String name;
     private String profilePic;
@@ -28,12 +28,12 @@ public class PayrollModel {
     @ElementCollection
     @CollectionTable(name = "payroll_department", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "department")
-    private List<String> departments;
+    private List<String> department;
     public PayrollModel(PayrollDTO model) {
         this.name=model.getName();
         this.profilePic=model.getProfilePic();
         this.gender=model.getGender();
-        this.departments=model.getDepartments();
+        this.department=model.getDepartment();
         this.salary= model.getSalary();
         this.notes=model.getNotes();
         this.startDate=model.getStartDate();

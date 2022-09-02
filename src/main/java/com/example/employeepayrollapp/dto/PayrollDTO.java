@@ -17,7 +17,7 @@ public class PayrollDTO {
     private String profilePic;
     @NotNull(message = "Gender should not be null!")
     private String gender;
-    private List<String> departments;
+    private List<String> department;
     @Min(value = 10000,message = "Salary should be more than 10,000!")
     private long salary;
     @Size(min=2,message = "Notes length should be more than 2!")
